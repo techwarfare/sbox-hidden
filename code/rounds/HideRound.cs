@@ -11,6 +11,7 @@ namespace HiddenGamemode
 	{
 		public override string RoundName => "Hide or Prepare!";
 		public override int RoundDuration => 20;
+		public virtual bool HiddenChoosen = false;
 
 		protected override void OnStart()
 		{
@@ -22,6 +23,7 @@ namespace HiddenGamemode
 		protected override void OnFinish()
 		{
 			Log.Info( "Finished Hide Round" );
+			HiddenChoosen = false;
 		}
 
 		protected override void OnTimeUp()
@@ -47,9 +49,10 @@ namespace HiddenGamemode
 			player.EnableHideInFirstPerson = true;
 			player.EnableShadowInFirstPerson = true;
 
-			if ( Rand.Int( 1, 2 ) == 1 )
+			if ( Rand.Int( 1, 2 ) == 1 && !HiddenChoosen )
 			{
 				player.Team = Game.HiddenTeam;
+				HiddenChoosen = true;
 			}
 			else
 			{
